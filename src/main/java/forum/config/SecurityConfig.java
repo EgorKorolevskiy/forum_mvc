@@ -22,6 +22,7 @@ public class SecurityConfig {
 //                .permitAll();
 //    }
 
+
     /**
      * 1. `http.httpBasic()` - Указывает, что будет использоваться базовая аутентификация (Basic Authentication) для аутентификации пользователя.
      * 2. `sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)` - Устанавливает стратегию управления сессиями на `STATELESS`, что означает, что сессии не будут создаваться.
