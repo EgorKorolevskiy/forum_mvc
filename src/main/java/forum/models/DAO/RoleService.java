@@ -3,14 +3,11 @@ package forum.models.DAO;
 import forum.models.Role;
 import forum.models.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class RoleDAO {
+public class RoleService {
     private final RoleRepository roleRepository;
 
     public void addRole(Role role) {

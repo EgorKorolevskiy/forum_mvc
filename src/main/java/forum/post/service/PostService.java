@@ -1,16 +1,13 @@
-package forum.models.DAO;
+package forum.post.service;
 
-import forum.models.Post;
-import forum.models.repositories.PostRepository;
+import forum.post.model.Post;
+import forum.post.model.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class PostDAO {
+public class PostService {
     private final PostRepository postRepository;
     public void addPost(Post post) {
         postRepository.save(post);

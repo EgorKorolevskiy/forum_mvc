@@ -1,4 +1,4 @@
-package forum.controllers;
+package forum.post.web;
 
 import org.springframework.web.bind.annotation.RestController;
 /**

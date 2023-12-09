@@ -1,5 +1,6 @@
 package forum.models;
 
+import forum.user.model.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,6 @@ public class Role {
 
     @ManyToOne
     // указываем явно по какому столбцу будет идти связка
-    @JoinColumn(name = "my_user_id")
-    private MyUser myUser;
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
 }
