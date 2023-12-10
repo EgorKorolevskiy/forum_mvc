@@ -3,7 +3,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/pr1_lesson2
     driverClassName: org.postgresql.Driver
     username: postgres
-    password: root
+    password: admin
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
