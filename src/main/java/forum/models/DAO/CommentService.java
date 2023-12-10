@@ -3,14 +3,11 @@ package forum.models.DAO;
 import forum.models.Comment;
 import forum.models.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CommentDAO {
+public class CommentService {
     private final CommentRepository commentRepository;
 
     public void saveComment(Comment comment) {

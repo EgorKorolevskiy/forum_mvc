@@ -1,12 +1,16 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/forum
+    url: jdbc:postgresql://localhost:5432/pr1_lesson2
     driverClassName: org.postgresql.Driver
     username: postgres
-    password: admin
+    password: root
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+
+flyway:
+  locations:
+    classpath: db/migration

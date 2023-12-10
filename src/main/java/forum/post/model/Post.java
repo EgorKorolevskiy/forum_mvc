@@ -1,5 +1,7 @@
-package forum.models;
+package forum.post.model;
 
+import forum.models.Comment;
+import forum.user.model.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +19,10 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "post_name")
     private String postName;
+
     @Column(name = "post_content")
     private String postContent;
 
@@ -28,11 +32,13 @@ public class Post {
 
     @Column(name = "creation_date")
     private LocalDate localDate;
+
     //    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
 //    private List<Comment> comments;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
     @ManyToOne
-    @JoinColumn(name = "my_user_id")
-    private MyUser author;
+    @JoinColumn(name = "user_id")
+    private UserEntity author;
 }
