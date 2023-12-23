@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<header>
+  <nav>
+    <ul>
+      <a href="/views/forum/main.html">Вернуться на домашнюю страницу форума</a>
+    </ul>
+  </nav>
+</header>
+<p>Добавить новый пойти</p>
+<form method="POST" action="/posts/">
+  <p><input type="text" placeholder="Название поста" name="postName" /></p>
+  <p><input type="text" placeholder="Содержимое поста" name="postContent" /></p>
+  <p><input type="submit" value="Добавить пост"/></p>
+</form>
+</body>
+</html>
