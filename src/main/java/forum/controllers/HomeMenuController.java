@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/home")
+@RequestMapping()
 public class HomeMenuController {
 
     // перенаправляет на страницу авторизации и регистрации
