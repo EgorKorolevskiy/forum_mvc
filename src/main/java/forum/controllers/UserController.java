@@ -1,12 +1,16 @@
 package forum.controllers;
 
+import forum.model.UserEntity;
 import forum.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -75,6 +79,15 @@ public class UserController {
         userService.findByLogin(username);
 
         return "User access!  users/user/test -- security: " + username + ", Role: " + role;
+    }
+
+
+    @GetMapping("/user/test2")
+    public List<String> userTest() {
+
+        Optional<UserEntity> user = userService.findByLogin("user");
+        return user.get().getRoles().stream().map(t-> t.getName()).toList();
+
     }
 
 }

@@ -25,10 +25,10 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-//    public List<PostEntity> findPostsByUserLogin(String login) {
-//        UserEntity userEntity = userService.findByLogin(login).get();
-//        return postRepository.findPostByUserLogin(userEntity.getLogin());
-//    }
+    public List<PostEntity> findPostsByUserLogin(String login) {
+        UserEntity userEntity = userService.findByLogin(login).orElseThrow(()->new RuntimeException("User not found"));
+        return postRepository.findPostByUserLogin(userEntity.getId());
+    }
 
     public void updatePost(PostEntity postEntity) {
         postRepository.saveAndFlush(postEntity);
