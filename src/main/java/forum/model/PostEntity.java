@@ -1,16 +1,9 @@
 package forum.model;
 
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,7 +31,7 @@ public class PostEntity {
     @Column(name = "creation_date", nullable = false)
     private LocalDate localDate;
 
-    // пишем mappedBy = "post" т.к. в клссе CommentEntity у нас есть поле private PostEntity post;
+    // пишем mappedBy = "post" т.к. в классе CommentEntity у нас есть поле private PostEntity post;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<CommentEntity> comments;
 

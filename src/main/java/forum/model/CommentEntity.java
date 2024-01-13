@@ -1,21 +1,16 @@
 package forum.model;
 
-
-import forum.model.PostEntity;
-import forum.model.UserEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "comment_entity")
 public class CommentEntity {
@@ -29,7 +24,7 @@ public class CommentEntity {
 
     @NotNull
     @Column(name = "comment_date", nullable = false)
-    private LocalDate commentDate;
+    private LocalDate localDate;
 
     @NotNull
     @Column(name = "count_likes", nullable = false)

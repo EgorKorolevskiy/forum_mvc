@@ -3,28 +3,36 @@ package forum.controllers;
 import forum.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/authorize")
+@RequestMapping()
 public class AuthorizedMenuController {
     private final UserService userService;
+
+    @GetMapping("/auth")
+    public String auth() {
+        return "Authenticated success";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "Logout success";
+    }
 
     // Пример редиректа
     //("/") - указывает что запрос будет выглядеть вот так - /menu/
     @GetMapping("/")
-    public ModelAndView homePage () {
+    public ModelAndView homePage() {
         return new ModelAndView("redirect:/views/authorize/menu.html");
     }
+
 
     @PostMapping("/add")
     public String register(@RequestParam String login,
@@ -32,12 +40,8 @@ public class AuthorizedMenuController {
         return userService.registrationUser(login, password);
     }
 
-    @GetMapping("/auth")
-    public String test() {
-        return "Authenticated success";
-    }
 
-//     Principal - очень сжатая инфа о юзере
+    //     Principal - очень сжатая инфа о юзере
     @GetMapping("/test")
     public String authPage(Principal principal) {
         userService.findByLogin(principal.getName());

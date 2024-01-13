@@ -12,6 +12,7 @@ import java.util.Optional;
 public class RoleService {
 
     private final RoleRepository roleRepository;
+
     public void save(RoleEntity entity) {
         roleRepository.save(entity);
     }
@@ -19,6 +20,7 @@ public class RoleService {
     public long findIdByName(String name) {
         return roleRepository.findIdByName(name);
     }
+
     public Optional<RoleEntity> findById(long id) {
         return roleRepository.findById(id);
     }

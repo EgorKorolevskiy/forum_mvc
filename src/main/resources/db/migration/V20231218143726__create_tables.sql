@@ -43,3 +43,10 @@ CREATE TABLE IF NOT EXISTS public.comment_entity (
 	CONSTRAINT fk5q5av5arkm3of9b5n493p992p FOREIGN KEY (post_id) REFERENCES public.post_entity(id),
 	CONSTRAINT fk7u6osru73338guaca8ukops8l FOREIGN KEY (user_id) REFERENCES public.user_entity(id)
 );
+
+CREATE TABLE IF NOT EXISTS public.bad_words_entity (
+	id bigserial NOT NULL,
+	word varchar(255) NOT NULL,
+	CONSTRAINT bad_words_entity_pkey PRIMARY KEY (id),
+	CONSTRAINT uk_46agc45scya093tdh8g86f0k7 UNIQUE (word)
+);
