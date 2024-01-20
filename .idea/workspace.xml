@@ -4,43 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="baa0cd2d-fd4d-4692-b488-89aaf29ecc7d" name="Changes" comment="настроил секьюрити, роли, хеширование пароля&#10;Работаю над созданием постов">
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/dto/CommentDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/dto/UserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/mapper/CommentMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/mapper/UserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/model/BadWordsEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/repositories/BadWordsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/utils/DateUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/utils/UtilService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V20231231145904__create_test_posts.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V20240113184917__create_bad_words.sql" afterDir="false" />
+    <list default="true" id="baa0cd2d-fd4d-4692-b488-89aaf29ecc7d" name="Changes" comment="Выполнил проект. Отправка на ревью">
+      <change afterPath="$PROJECT_DIR$/src/main/java/forum/exception/CustomException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/forum/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/forum/exception/model/ErrorResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/config/CustomAuthSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/config/CustomAuthSuccessHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/config/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/config/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/AuthorizedMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/AuthorizedMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/AuthorizedMenuController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/ForumMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/ForumMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/HomeMenuController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/PostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/dto/PostDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/dto/PostDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/model/CommentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/model/CommentEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/model/PostEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/model/PostEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/mapper/PostMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/mapper/PostMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/model/RoleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/model/RoleEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/model/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/model/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/repositories/BadWordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/repositories/BadWordsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/repositories/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/repositories/CommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/repositories/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/repositories/PostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/repositories/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/CommentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/RoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V20231218143726__create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V20231218143726__create_tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/views/posts/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/views/posts/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/utils/UtilService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/utils/UtilService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,8 +34,8 @@
       <list>
         <option value="Enum" />
         <option value="HTML File" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -150,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702111409013</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Выполнил проект. Отправка на ревью">
+      <created>1705163389766</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705163389766</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -179,10 +168,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Первая структура проекта" />
     <MESSAGE value="Первая структура проекта_1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Первая структура проекта_1" />
+    <MESSAGE value="Выполнил проект. Отправка на ревью" />
+    <option name="LAST_COMMIT_MESSAGE" value="Выполнил проект. Отправка на ревью" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/forum_mvc$Application.ic" NAME="Application Coverage Results" MODIFIED="1703687639029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/forum_mvc$Application.ic" NAME="Application Coverage Results" MODIFIED="1705695427678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>forum.controllers.*</FILTER>
     </SUITE>
   </component>

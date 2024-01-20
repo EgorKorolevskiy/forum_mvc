@@ -21,6 +21,5 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.sendRedirect("/forum/");
-//        response.sendRedirect("/authorize/test");
     }
 }

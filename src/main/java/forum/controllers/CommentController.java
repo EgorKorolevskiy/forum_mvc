@@ -1,8 +1,10 @@
 package forum.controllers;
 
 import forum.dto.CommentDto;
+import forum.exception.CustomException;
 import forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,9 +37,8 @@ public class CommentController {
      * @return
      */
     @PostMapping("/add/{postId}")
-    public String addNewComment(@RequestBody CommentDto commentDto, @PathVariable Long postId) {
-        commentService.addComment(commentDto.getCommentText(), postId);
-        return "Comment added successful";
+    public ResponseEntity<String> addNewComment(@RequestBody CommentDto commentDto, @PathVariable Long postId) {
+        return commentService.addComment(commentDto.getCommentText(), postId);
     }
 
     /**
@@ -47,9 +48,8 @@ public class CommentController {
      * @return
      */
     @PutMapping("/add/like/{commentId}")
-    public String addLikeToComment(@PathVariable Long commentId) {
-        commentService.addLikeToComment(commentId);
-        return "Like was added";
+    public ResponseEntity<String> addLikeToComment(@PathVariable Long commentId) {
+       return commentService.addLikeToComment(commentId);
     }
 
     /**
@@ -60,7 +60,7 @@ public class CommentController {
      * @return
      */
     @PutMapping("/update/{commentId}")
-    public String updateCommentById(@PathVariable Long commentId, @RequestBody CommentDto commentDto) {
+    public ResponseEntity<String> updateCommentById(@PathVariable Long commentId, @RequestBody CommentDto commentDto) {
         return commentService.updateComment(commentId, commentDto.getCommentText());
     }
 
@@ -71,7 +71,7 @@ public class CommentController {
      * @return
      */
     @DeleteMapping("/delete/{commentId}")
-    public String deleteComment(@PathVariable Long commentId) {
+    public ResponseEntity<String> deleteComment(@PathVariable Long commentId) {
         return commentService.deleteComment(commentId);
     }
 }

@@ -1,24 +1,18 @@
 package forum.controllers;
 
 import forum.dto.UserDto;
-import forum.model.UserEntity;
 import forum.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 
 /**
  * POST -- /user/add - создание нового юзера
  * PUT -- /user/add - создание нового юзера
  * PUT -- /user/admin/addRole/{userLogin}/{roleId} - Админка. Юзер с ролью админа добавляет роль другому юзеру
- * DEL -- /user/admin/deleteRole/{userLogin}/{roleId} - Админка. Удаляет роль у юзера
- * DEL -- /user/moder/deleteRole/{userLogin}/{roleId} - Модерка. Модер может удалять роль у юзера
+ * DEL -- /user/{role}/deleteRole/{userLogin}/{roleId} -Удаляет роль у юзера
  * <p>
  * (старые варианты)
  * href="user.html" - html форма для создания нового юзера
@@ -40,7 +34,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/add")
-    public String addNewUser(@RequestBody UserDto userDTO) {
+    public ResponseEntity<String> addNewUser(@RequestBody UserDto userDTO) {
         return userService.registrationUser(userDTO.getLogin(), userDTO.getPassword());
     }
 
@@ -53,33 +47,20 @@ public class UserController {
      */
 
     @PutMapping("/admin/addRole/{userLogin}/{roleId}")
-    public String adminAddRoleToUser(@PathVariable String userLogin, @PathVariable Long roleId) {
+    public ResponseEntity<String> adminAddRoleToUser(@PathVariable String userLogin, @PathVariable Long roleId) {
         return userService.addRoleToUserByLogin(userLogin, roleId);
     }
 
     /**
-     * Админка. Удаляет роль у юзера
+     * Удаляет роль у юзера
      *
      * @param userLogin
      * @param roleId
      * @return
      */
 
-    @DeleteMapping("admin/deleteRole/{userLogin}/{roleId}")
-    public String adminDeleteRoleToUser(@PathVariable String userLogin, @PathVariable Long roleId) {
-        return userService.deleteRoleToUserByLogin(userLogin, roleId);
-    }
-
-    /**
-     * Модерка. Модер может удалять роль у юзера
-     *
-     * @param userLogin
-     * @param roleId
-     * @return
-     */
-
-    @DeleteMapping("moder/deleteRole/{userLogin}/{roleId}")
-    public String moderDeleteRoleToUser(@PathVariable String userLogin, @PathVariable Long roleId) {
+    @DeleteMapping("{role}/deleteRole/{userLogin}/{roleId}")
+    public ResponseEntity<String> adminDeleteRoleToUser(@PathVariable String userLogin, @PathVariable Long roleId) {
         return userService.deleteRoleToUserByLogin(userLogin, roleId);
     }
 

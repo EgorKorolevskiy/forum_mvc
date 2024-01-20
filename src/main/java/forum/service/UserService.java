@@ -1,8 +1,10 @@
 package forum.service;
 
+import forum.exception.CustomException;
 import forum.model.UserEntity;
 import forum.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -46,10 +48,10 @@ public class UserService {
      * @param password
      * @return
      */
-    public String registrationUser(String login, String password) {
+    public ResponseEntity<String> registrationUser(String login, String password) {
         var existLogin = findByLogin(login);
         if (existLogin.isPresent()) {
-            return "Account already exists";
+           throw new CustomException("Account already exists");
         }
         // шифруем пароль в хеш через BCrypt
         var passwordEncoder = new BCryptPasswordEncoder();
@@ -63,7 +65,7 @@ public class UserService {
         saveUser(user);
         // добавляем юзера к роли (по дефолту первая регистрация добавляется роль USER)
         addRoleToUserById(roleService.findIdByName("USER"), user.getId());
-        return "Account created";
+        return ResponseEntity.ok("Account created");
     }
 
     /**
@@ -72,14 +74,15 @@ public class UserService {
      * @param roleId
      * @param userId
      */
-    public void addRoleToUserById(long roleId, Long userId) {
-        var user = findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        var role = roleService.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+    public ResponseEntity<String> addRoleToUserById(long roleId, Long userId) {
+        var user = findById(userId).orElseThrow(() -> new CustomException("User not found"));
+        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>());
         }
         user.addRole(role, user);
         saveUser(user);
+       return ResponseEntity.ok("Role added to user");
     }
 
     /**
@@ -89,15 +92,15 @@ public class UserService {
      * @param roleId
      * @return
      */
-    public String addRoleToUserByLogin(String userLogin, Long roleId) {
-        var user = findByLogin(userLogin).orElseThrow(() -> new RuntimeException("User not found"));
-        var role = roleService.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+    public ResponseEntity<String> addRoleToUserByLogin(String userLogin, Long roleId) {
+        var user = findByLogin(userLogin).orElseThrow(() -> new CustomException("User not found"));
+        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>());
         }
         user.addRole(role, user);
         saveUser(user);
-        return String.format("Role %s was added to user %s", role.getName(), user.getLogin());
+        return ResponseEntity.ok(String.format("Role %s was added to user %s", role.getName(), user.getLogin()));
     }
 
     /**
@@ -107,15 +110,15 @@ public class UserService {
      * @param roleId
      * @return
      */
-    public String deleteRoleToUserByLogin(String userLogin, Long roleId) {
-        var user = findByLogin(userLogin).orElseThrow(() -> new RuntimeException("User not found"));
-        var role = roleService.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+    public ResponseEntity<String> deleteRoleToUserByLogin(String userLogin, Long roleId) {
+        var user = findByLogin(userLogin).orElseThrow(() -> new CustomException("User not found"));
+        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
         if (user.getRoles() == null) {
-            return "User don't have such role";
+            throw new CustomException("User don't have such role");
         }
         user.removeRole(role);
         saveUser(user);
-        return String.format("Role %s was removed from user %s", role.getName(), user.getLogin());
+        return ResponseEntity.ok(String.format("Role %s was removed from user %s", role.getName(), user.getLogin()));
     }
 
     /**
@@ -128,17 +131,5 @@ public class UserService {
         var user = (User) authentication.getPrincipal();
         final var username = user.getUsername();
         return findByLogin(username).get();
-    }
-
-    /**
-     * Возвращаем все роли у авторизованного юзера
-     *
-     * @return
-     */
-
-    public Collection<? extends GrantedAuthority> getUserAuthorities() {
-        // Получение аутентификации пользователя
-        // Получение всех ролей пользователя
-        return SecurityContextHolder.getContext().getAuthentication().getAuthorities();
     }
 }

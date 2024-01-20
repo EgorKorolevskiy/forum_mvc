@@ -2,20 +2,25 @@ package forum.controllers;
 
 import forum.dto.PostDto;
 import forum.mapper.PostMapper;
+import forum.model.UserEntity;
 import forum.service.PostService;
 import forum.service.UserService;
+import forum.utils.UtilService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Для постов такой маппинг:
- * GET -- /post/get/{login} - Возвращает посты юзера по логину
- * GET -- /post/get/all/posts - Возвращаем все посты
- * GET -- /post/get/all - Возвращаем все посты и комментарии под постом
- * GET -- /post/get/date/{date} - Возвращаем все посты по дате
+ * GET -- /post/{login} - Возвращает посты юзера по логину
+ * GET -- /post/all - Возвращаем все посты
+ * GET -- /post/all/post_comments - Возвращаем все посты и комментарии под постом
+ * GET -- /post/date/{date} - Возвращаем все посты по дате
  * POST -- /post/add - Добавляет пост в БД
  * PUT -- /post/update/{postId} - Обновление поста юзера через id поста в БД.
  * DEL -- /post/delete/{postId} - Удаление поста через id поста в БД
@@ -35,16 +40,14 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
 
-
     /**
      * Возвращает посты юзера по логину
-     *
-     * @param login
      * @return
      */
-    @GetMapping("/get/{login}")
-    public List<PostDto> showPostsByLogin(@PathVariable String login) {
-        return postService.findPostsByUserLogin(login).stream().map(PostMapper::mapToDto).toList();
+    @GetMapping("/posts")
+    public List<PostDto> showPostsByLogin() {
+        UserEntity currUser = userService.getCurrentUserByPrincipal();
+        return postService.findPostsByUserLogin(currUser.getLogin()).stream().map(PostMapper::mapToDto).toList();
     }
 
     /**
@@ -52,7 +55,7 @@ public class PostController {
      *
      * @return
      */
-    @GetMapping("/get/all/posts")
+    @GetMapping("/all")
     public List<PostDto> showAllPosts() {
         return postService.findAll().stream().map(PostMapper::mapToDto).toList();
     }
@@ -62,9 +65,9 @@ public class PostController {
      *
      * @return
      */
-    @GetMapping("/get/all")
+    @GetMapping("/all/post_comments")
     public List<PostDto> showAllPostsWithComments() {
-        return postService.findAllPostsWithComments();
+        return postService.findAllPostsWithComments().stream().map(PostMapper::mapToDto).toList();
     }
 
 
@@ -74,7 +77,7 @@ public class PostController {
      * @param date
      * @return
      */
-    @GetMapping("/get/date/{date}")
+    @GetMapping("/date/{date}")
     public List<PostDto> showPostByDate(@PathVariable("date") LocalDate date) {
         return postService.findByDate(date).stream().map(PostMapper::mapToDto).toList();
     }
@@ -86,9 +89,8 @@ public class PostController {
      * @return
      */
     @PostMapping("/add")
-    public String addNewPost(@RequestBody PostDto postDto) {
-        postService.createPost(postDto.getPostName(), postDto.getPostContent());
-        return "Post added successful";
+    public ResponseEntity<String> addNewPost(@RequestBody PostDto postDto) {
+        return postService.createPost(postDto.getPostName(), postDto.getPostContent());
     }
 
     /**
@@ -99,7 +101,7 @@ public class PostController {
      * @return
      */
     @PutMapping("/update/{postId}")
-    public String updatePostById(@PathVariable Long postId, @RequestBody PostDto postDto) {
+    public ResponseEntity<String> updatePostById(@PathVariable Long postId, @RequestBody PostDto postDto) {
         return postService.updatePost(postId, postDto.getPostName(), postDto.getPostContent());
     }
 
@@ -110,7 +112,7 @@ public class PostController {
      * @return
      */
     @DeleteMapping("/delete/{postId}")
-    public String deletePostById(@PathVariable Long postId) {
+    public ResponseEntity<String> deletePostById(@PathVariable Long postId) {
         return postService.deletePostById(postId);
     }
 }

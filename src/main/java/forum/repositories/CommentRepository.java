@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
-
     @Query(value = """
             select ue.login from user_entity ue
             join comment_entity ce on ue.id = ce.user_id

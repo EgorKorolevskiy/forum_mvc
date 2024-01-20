@@ -72,15 +72,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // и хешированный пароль который получил из БД). Если равны то authenticationProvider кладет данные в
     // секьюрити контекст (в нем мы можем запросить только данные которые есть в principal - логин и роли)
 
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        var authenticationProvider = new DaoAuthenticationProvider();
-        // устанавливает хешированный пароль для юзера
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        // предоставляем юзера
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        return authenticationProvider;
-    }
+//    @Bean
+//    public DaoAuthenticationProvider daoAuthenticationProvider() {
+//        var authenticationProvider = new DaoAuthenticationProvider();
+//        // устанавливает хешированный пароль для юзера
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//        // предоставляем юзера
+//        authenticationProvider.setUserDetailsService(userDetailsService);
+//        return authenticationProvider;
+//    }
 
     // получает хеш паролей юзеров
     @Bean

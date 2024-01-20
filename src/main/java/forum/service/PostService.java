@@ -1,13 +1,16 @@
 package forum.service;
 
 import forum.dto.PostDto;
+import forum.exception.CustomException;
 import forum.mapper.CommentMapper;
 import forum.mapper.PostMapper;
+import forum.model.CommentEntity;
 import forum.model.PostEntity;
 import forum.repositories.PostRepository;
 import forum.utils.DateUtils;
 import forum.utils.UtilService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,7 +46,7 @@ public class PostService {
 
 
     public List<PostEntity> findPostsByUserLogin(String login) {
-        var userEntity = userService.findByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
+        var userEntity = userService.findByLogin(login).orElseThrow(() -> new CustomException("User not found"));
         return postRepository.findPostByUserLogin(userEntity.getId());
     }
 
@@ -52,13 +55,11 @@ public class PostService {
      *
      * @return
      */
-    public List<PostDto> findAllPostsWithComments() {
-        return postRepository.findAll().stream()
-                .map(post -> {
-                    var postDto = PostMapper.mapToDto(post);
-                    var commentDto = post.getComments().stream().map(CommentMapper::mapToDto).toList();
-                    postDto.setComments(commentDto);
-                    return postDto;
+    public List<PostEntity> findAllPostsWithComments() {
+       return findAll().stream()
+                .peek(post -> {
+                    List<CommentEntity> comments = post.getComments();
+                    post.setComments(comments);
                 })
                 .toList();
     }
@@ -75,27 +76,27 @@ public class PostService {
      * @param postContent
      * @return
      */
-    public String updatePost(Long postId, String postName, String postContent) {
+    public ResponseEntity<String> updatePost(Long postId, String postName, String postContent) {
         // получаем авторизованного юзера
         var currentUser = userService.getCurrentUserByPrincipal();
         // получаем логин собственника поста
         final var owner = findUserLoginByPostId(postId);
         // проверка на нул
         if (currentUser == null) {
-            return "Unauthorized user";
+            throw new CustomException("Unauthorized user");
         }
         // проверка на собственника поста и роли через Spring Security
         // Получение всех ролей пользователя
-        var userAuthorities = userService.getUserAuthorities();
+        var userAuthorities = UtilService.getUserAuthorities();
         if (currentUser.getLogin().equals(owner) || UtilService.hasAdminOrModeratorRole(userAuthorities)) {
             // Находим пост по id
-            var post = findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+            var post = findById(postId).orElseThrow(() -> new CustomException("Post not found"));
             post.setPostName(postName);
             post.setPostContent(postContent);
             addPost(post);
-            return String.format("%s update successfully post %d", currentUser.getLogin(), postId);
+            return ResponseEntity.ok(String.format("%s update successfully post %d", currentUser.getLogin(), postId));
         }
-        return "You have no roots for this";
+        throw new CustomException("You have no roots for this");
     }
 
     /**
@@ -104,22 +105,22 @@ public class PostService {
      * @param postId
      * @return
      */
-    public String deletePostById(long postId) {
+    public ResponseEntity<String> deletePostById(long postId) {
         // получаем авторизованного юзера
         var currentUser = userService.getCurrentUserByPrincipal();
         // получаем логин собственника поста
         var owner = findUserLoginByPostId(postId);
         // проверка на нул
         if (currentUser == null) {
-            return "Unauthorized user";
+            throw new CustomException("Unauthorized user");
         }
         // Получение всех ролей пользователя
-        var userAuthorities = userService.getUserAuthorities();
+        var userAuthorities = UtilService.getUserAuthorities();
         if (currentUser.getLogin().equals(owner) || UtilService.hasAdminOrModeratorRole(userAuthorities)) {
             deleteById(postId);
-            return String.format("Post %d was deleted", postId);
+            return ResponseEntity.ok(String.format("Post %d was deleted", postId));
         }
-        return "You have no roots for this";
+        throw new CustomException("You have no roots for this");
     }
 
     /**
@@ -128,7 +129,7 @@ public class PostService {
      * @param postName
      * @param postContent
      */
-    public void createPost(String postName, String postContent) {
+    public ResponseEntity<String> createPost(String postName, String postContent) {
         var post = PostEntity.builder()
                 .postName(postName)
                 .postContent(postContent)
@@ -137,5 +138,6 @@ public class PostService {
                 .user(userService.getCurrentUserByPrincipal())
                 .build();
         addPost(post);
+        return ResponseEntity.ok("Post was added");
     }
 }

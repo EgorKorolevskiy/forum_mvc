@@ -1,5 +1,6 @@
 package forum.service;
 
+import forum.exception.CustomException;
 import forum.model.BadWordsEntity;
 import forum.model.CommentEntity;
 import forum.repositories.BadWordsRepository;
@@ -7,6 +8,7 @@ import forum.repositories.CommentRepository;
 import forum.utils.DateUtils;
 import forum.utils.UtilService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,9 +48,9 @@ public class CommentService {
      * @param commentText
      * @param postId
      */
-    public void addComment(String commentText, long postId) {
-        var badWordsList = badWordsRepository.findByWord(commentText);
-        if (!badWordsList.isEmpty()) {
+    public ResponseEntity<String> addComment(String commentText, long postId) {
+        Optional<String> word = badWordsRepository.findByWord(commentText);
+        if (word.isPresent()) {
             commentText = "Нельзя писать такое слово";
         }
         var comment = CommentEntity.builder()
@@ -56,9 +58,10 @@ public class CommentService {
                 .localDate(DateUtils.getDate())
                 .countLikes(0)
                 .user(userService.getCurrentUserByPrincipal())
-                .post(postService.findById(postId).orElseThrow(() -> new RuntimeException("Пост не найден")))
+                .post(postService.findById(postId).orElseThrow(() -> new CustomException("User not found")))
                 .build();
         saveComment(comment);
+        return ResponseEntity.ok("Comment was added");
     }
 
     /**
@@ -66,10 +69,12 @@ public class CommentService {
      *
      * @param commentId
      */
-    public void addLikeToComment(long commentId) {
-        var comment = findCommentById(commentId).orElseThrow(() -> new RuntimeException("Comment not found"));
+    public ResponseEntity<String> addLikeToComment(long commentId) {
+        var comment = findCommentById(commentId)
+                .orElseThrow(() -> new CustomException("Comment not found"));
         comment.setCountLikes(comment.getCountLikes() + 1);
         saveComment(comment);
+        return ResponseEntity.ok("Like was added");
     }
 
     /**
@@ -80,20 +85,20 @@ public class CommentService {
      * @return
      */
 
-    public String updateComment(long commentId, String commentText) {
+    public ResponseEntity<String> updateComment(long commentId, String commentText) {
         var currentUser = userService.getCurrentUserByPrincipal();
         var owner = findUserLoginByCommentId(commentId);
         if (currentUser == null) {
-            return "Unauthorized user";
+            throw new CustomException("Unauthorized user");
         }
-        var userAuthorities = userService.getUserAuthorities();
+        var userAuthorities = UtilService.getUserAuthorities();
         if (currentUser.getLogin().equals(owner) || UtilService.hasAdminOrModeratorRole(userAuthorities)) {
-            var comment = findCommentById(commentId).orElseThrow(() -> new RuntimeException("Comment not found"));
+            var comment = findCommentById(commentId).orElseThrow(() -> new CustomException("Comment not found"));
             comment.setCommentText(commentText);
             saveComment(comment);
-            return String.format("%s update successfully comment %d", currentUser.getLogin(), commentId);
+            return ResponseEntity.ok( String.format("%s update successfully comment %d", currentUser.getLogin(), commentId));
         }
-        return "You have no roots for this";
+        throw new CustomException("You have no roots for this");
     }
 
     /**
@@ -103,17 +108,17 @@ public class CommentService {
      * @return
      */
 
-    public String deleteComment(long commentId) {
+    public ResponseEntity<String> deleteComment(long commentId) {
         var currentUser = userService.getCurrentUserByPrincipal();
         var owner = findUserLoginByCommentId(commentId);
         if (currentUser == null) {
-            return "Unauthorized user";
+            throw new CustomException("Unauthorized user");
         }
-        var userAuthorities = userService.getUserAuthorities();
+        var userAuthorities = UtilService.getUserAuthorities();
         if (currentUser.getLogin().equals(owner) || UtilService.hasAdminOrModeratorRole(userAuthorities)) {
             deleteCommentById(commentId);
-            return String.format("Comment %d was deleted", commentId);
+            return ResponseEntity.ok(String.format("Comment %d was deleted", commentId));
         }
-        return "You have no roots for this";
+        throw new CustomException("You have no roots for this");
     }
 }
