@@ -1,16 +1,15 @@
 package forum.service;
 
-import forum.config.SecurityConfig;
+import forum.exception.CustomException;
 import forum.model.UserEntity;
 import forum.repositories.UserRepository;
-import forum.model.RoleEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,7 +25,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Optional <UserEntity> findById(long id) {
+    public Optional<UserEntity> findById(long id) {
         return userRepository.findById(id);
     }
 
@@ -42,75 +41,95 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public String registrationUser(String login, String password) {
-        Optional<UserEntity> existLogin = findByLogin(login);
-        if (existLogin.isEmpty()) {
-            // шифруем пароль в хеш через BCrypt
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPass = passwordEncoder.encode(password);
-            // создаем юзера
-            UserEntity user = UserEntity.builder()
-                    .login(login)
-                    .password(hashedPass)
-                    .build();
-            // сохраняем юзера
-            saveUser(user);
-            // добавляем юзера к роли (по дефолту первая регистрация добавляется роль USER)
-            addUserToRole(roleService.findIdByName("USER"), user.getId());
-            return "Account created";
+    /**
+     * Метод регистрации юзера
+     *
+     * @param login
+     * @param password
+     * @return
+     */
+    public ResponseEntity<String> registrationUser(String login, String password) {
+        var existLogin = findByLogin(login);
+        if (existLogin.isPresent()) {
+           throw new CustomException("Account already exists");
         }
-        return "Account already exists";
+        // шифруем пароль в хеш через BCrypt
+        var passwordEncoder = new BCryptPasswordEncoder();
+        final var hashedPass = passwordEncoder.encode(password);
+        // создаем юзера
+        var user = UserEntity.builder()
+                .login(login)
+                .password(hashedPass)
+                .build();
+        // сохраняем юзера
+        saveUser(user);
+        // добавляем юзера к роли (по дефолту первая регистрация добавляется роль USER)
+        addRoleToUserById(roleService.findIdByName("USER"), user.getId());
+        return ResponseEntity.ok("Account created");
     }
 
-    public void addUserToRole(long roleId, Long userId) {
-        UserEntity user = findById(userId).get();
-        RoleEntity role = roleService.findById(roleId).get();
+    /**
+     * Добавляем роль к юзеру по Id роли и Id юзера
+     *
+     * @param roleId
+     * @param userId
+     */
+    public ResponseEntity<String> addRoleToUserById(long roleId, Long userId) {
+        var user = findById(userId).orElseThrow(() -> new CustomException("User not found"));
+        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>());
         }
         user.addRole(role, user);
         saveUser(user);
+       return ResponseEntity.ok("Role added to user");
     }
 
-    public UserEntity getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserEntity) authentication.getPrincipal();
+    /**
+     * Добавляем роль к юзеру по логину юзера и id роли из БД
+     *
+     * @param userLogin
+     * @param roleId
+     * @return
+     */
+    public ResponseEntity<String> addRoleToUserByLogin(String userLogin, Long roleId) {
+        var user = findByLogin(userLogin).orElseThrow(() -> new CustomException("User not found"));
+        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
+        if (user.getRoles() == null) {
+            user.setRoles(new HashSet<>());
+        }
+        user.addRole(role, user);
+        saveUser(user);
+        return ResponseEntity.ok(String.format("Role %s was added to user %s", role.getName(), user.getLogin()));
     }
 
+    /**
+     * Удаляем роль у юзера по логину юзера и id роли из БД
+     *
+     * @param userLogin
+     * @param roleId
+     * @return
+     */
+    public ResponseEntity<String> deleteRoleToUserByLogin(String userLogin, Long roleId) {
+        var user = findByLogin(userLogin).orElseThrow(() -> new CustomException("User not found"));
+        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
+        if (user.getRoles() == null) {
+            throw new CustomException("User don't have such role");
+        }
+        user.removeRole(role);
+        saveUser(user);
+        return ResponseEntity.ok(String.format("Role %s was removed from user %s", role.getName(), user.getLogin()));
+    }
 
+    /**
+     * Получение текущего авторизованного Optional юзера по логину из контекста спринга
+     *
+     * @return
+     */
+    public UserEntity getCurrentUserByPrincipal() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var user = (User) authentication.getPrincipal();
+        final var username = user.getUsername();
+        return findByLogin(username).get();
+    }
 }
-
-//    public String registrationUser(String login, String password) {
-//        Optional<UserEntity> existLogin = findByLogin(login);
-//        if (existLogin.isEmpty()) {
-//            addUser(UserEntity.builder()
-//                    .login(login)
-//                    .password(password)
-//                    .build());
-//            return "Account created";
-//        }
-//        return "Account already exists";
-//    }
-
-//    public String registrationUser(String login, String password) {
-//        Optional<UserEntity> existLogin = findByLogin(login);
-//        if (existLogin.isEmpty()) {
-//            var role = roleService.findRoleByName("user");
-//            if (role != null) {
-//                Set<RoleEntity> userRoles = new HashSet<>();
-//                userRoles.add(role);
-//                addUser(UserEntity.builder()
-//                        .login(login)
-//                        .password(password)
-//                        .roles(userRoles)
-//                        .build());
-//                return "Account created";
-//            }
-//            return "Role not found";
-//        }
-//        return "Account already exists";
-//    }
-//}
-
-
-

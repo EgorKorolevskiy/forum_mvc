@@ -25,18 +25,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/home/**", "/home", "/users/user/test2").permitAll()
-                .antMatchers(HttpMethod.GET, "/authorize/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/user/add").permitAll()
+                .antMatchers(HttpMethod.GET, "/auth/**").authenticated()
 
-                .antMatchers(HttpMethod.GET, "/users/admin/**", "/users/admin").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/users/moder/**", "/users/moder").hasAnyRole("ADMIN", "MODER")
-                .antMatchers(HttpMethod.GET, "/users/user/**", "/users/user").hasAnyRole("ADMIN", "MODER", "USER")
+                .antMatchers(HttpMethod.GET, "/user/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/user/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/user/admin/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/users/user/**", "/users/user").hasAnyRole("ADMIN", "MODER", "USER")
+                .antMatchers(HttpMethod.GET, "/user/moder/**").hasAnyRole("ADMIN", "MODER")
+                .antMatchers(HttpMethod.DELETE, "/user/moder/**").hasAnyRole("ADMIN", "MODER")
+
+                .antMatchers(HttpMethod.GET, "/user/user/**").hasAnyRole("ADMIN", "MODER", "USER")
+
+                .antMatchers(HttpMethod.POST, "/post/add").hasAnyRole("ADMIN", "MODER", "USER")
+                .antMatchers(HttpMethod.POST, "/comment/add").hasAnyRole("ADMIN", "MODER", "USER")
                 // для всех остальных запросов - нужна аутентификация
                 // при включенном .anyRequest() .authenticated - не пускает даже по 30 строчке по этому пути
-//                .anyRequest()
-//                .authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
                 // форма для авторизации или можно использовать .httpBasic()
                 .formLogin()
@@ -45,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(customAuthSuccessHandler)
                 .and()
                 // после выхода логаута, можно выйти по нужному адресу
-                .logout().logoutSuccessUrl("/home/")
+                .logout().logoutSuccessUrl("/logout")
                 .permitAll();
     }
 
@@ -66,15 +72,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // и хешированный пароль который получил из БД). Если равны то authenticationProvider кладет данные в
     // секьюрити контекст (в нем мы можем запросить только данные которые есть в principal - логин и роли)
 
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        // устанавливает хешированный пароль для юзера
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        // предоставляем юзера
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        return authenticationProvider;
-    }
+//    @Bean
+//    public DaoAuthenticationProvider daoAuthenticationProvider() {
+//        var authenticationProvider = new DaoAuthenticationProvider();
+//        // устанавливает хешированный пароль для юзера
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//        // предоставляем юзера
+//        authenticationProvider.setUserDetailsService(userDetailsService);
+//        return authenticationProvider;
+//    }
 
     // получает хеш паролей юзеров
     @Bean

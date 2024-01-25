@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +17,5 @@ public class PostDto {
     private String postContent;
     private LocalDate localDate;
     private Long userId;
+    private List<CommentDto> comments;
 }

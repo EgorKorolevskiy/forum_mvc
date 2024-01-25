@@ -4,20 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="baa0cd2d-fd4d-4692-b488-89aaf29ecc7d" name="Changes" comment="мердж флай вея">
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/dto/PostDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/forum/mapper/PostMapper.java" afterDir="false" />
+    <list default="true" id="baa0cd2d-fd4d-4692-b488-89aaf29ecc7d" name="Changes" comment="Выполнил проект. Отправка на ревью">
+      <change afterPath="$PROJECT_DIR$/src/main/java/forum/exception/CustomException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/forum/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/forum/exception/model/ErrorResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/config/CustomAuthSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/config/CustomAuthSuccessHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/HomeMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/HomeMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/AuthorizedMenuController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/CommentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/PostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/model/CommentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/model/CommentEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/model/PostEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/model/PostEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/model/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/model/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/repositories/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/repositories/PostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/mapper/PostMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/mapper/PostMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/model/RoleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/model/RoleEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/repositories/BadWordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/repositories/BadWordsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/repositories/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/repositories/CommentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/CommentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/utils/UtilService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/utils/UtilService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +33,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="HTML File" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -45,22 +50,28 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="2ZAk6huOjJ6pXu8zX3Y89SY78gu" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature-refactoring2",
-    "last_opened_file_path": "D:/JavaProjects/programming1_fork",
-    "settings.editor.selected.configurable": "IntelliLang.Configuration"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/JavaProjects/pr1_springboot_fork&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;IntelliLang.Configuration&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources\static\views" />
@@ -69,11 +80,11 @@
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\JavaProjects\forum_mvc\src\main\resources\db\migration" />
+      <recent name="D:\JavaProjects\forum_mvc\src\main\resources\db" />
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources\static\views\home" />
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources\static\views\authorize" />
-      <recent name="D:\JavaProjects\forum_mvc\src\main\resources\db" />
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources\static\views\menu" />
-      <recent name="D:\JavaProjects\forum_mvc\src\main\resources\static\views\users" />
     </key>
   </component>
   <component name="RunManager">
@@ -92,6 +103,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Application" />
+        <item itemvalue="Application.Application" />
         <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
@@ -119,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702111409013</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Выполнил проект. Отправка на ревью">
+      <created>1705163389766</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705163389766</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,7 +153,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="project_complete" />
                       </list>
                     </value>
                   </entry>
@@ -148,6 +168,12 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Первая структура проекта" />
     <MESSAGE value="Первая структура проекта_1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Первая структура проекта_1" />
+    <MESSAGE value="Выполнил проект. Отправка на ревью" />
+    <option name="LAST_COMMIT_MESSAGE" value="Выполнил проект. Отправка на ревью" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/forum_mvc$Application.ic" NAME="Application Coverage Results" MODIFIED="1705695427678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>forum.controllers.*</FILTER>
+    </SUITE>
   </component>
 </project>

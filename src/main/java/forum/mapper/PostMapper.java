@@ -11,6 +11,7 @@ public class PostMapper {
                 .postContent(postEntity.getPostContent())
                 .localDate(postEntity.getLocalDate())
                 .userId(postEntity.getUser().getId())
+                .comments(postEntity.getComments().stream().map(CommentMapper::mapToDto).toList())
                 .build();
     }
 }

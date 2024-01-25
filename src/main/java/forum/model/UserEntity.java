@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +25,12 @@ public class UserEntity {
 
     @NotNull
     @Column(nullable = false, unique = true)
+    @Size(min = 2)
     private String login;
 
     @NotNull
     @Column(nullable = false)
+    @Size(min = 2)
     private String password;
 
     @OneToMany(mappedBy = "user")
@@ -52,8 +55,4 @@ public class UserEntity {
         roles.remove(role);
         role.getUsers().remove(this);
     }
-
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
-//    private Set<RoleEntity> roles = new HashSet<>();
 }

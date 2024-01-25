@@ -1,7 +1,6 @@
 package forum.config;
 
 import forum.model.RoleEntity;
-import forum.model.UserEntity;
 import forum.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -11,25 +10,32 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    /**
+     * Используем IOC для вендрения зависимости через @RequiredArgsConstructor с пометкой final у нужного поля
+     */
     private final UserService userService;
 
     // Спрингу достаточно знать о пользователе только его имя, пароль и права доступа. Всем этим заведует
     // интерфейс UserDetails. При попытке входа в аккаунт запускается метод loadUserByUsername
     // Используем @Transactional для lazy коллекции
+
+    /**
+     * Возвращает пользователя при попытке входа в аккаунт
+     *
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> userOptional = userService.findByLogin(username);
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException(String.format("User %s not found", username));
-        }
-        UserEntity user = userOptional.get();
+        var user = userService.findByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", username)));
         return User.builder()
                 .username(user.getLogin())
                 .password(user.getPassword())
@@ -37,7 +43,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .build();
     }
 
-    // Из коллекции ролей возвращаем массив с правами доступа юзера
+    /**
+     * Из коллекции ролей возвращаем массив с правами доступа юзера
+     *
+     * @param roles коллекция ролей пользователя
+     * @return массив имен пользователя
+     */
     private String[] getUsersRoles(Set<RoleEntity> roles) {
         return roles.stream()
                 .map(RoleEntity::getName)
