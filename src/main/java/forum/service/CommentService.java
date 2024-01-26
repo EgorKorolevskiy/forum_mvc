@@ -26,12 +26,8 @@ public class CommentService {
         commentRepository.save(commentEntity);
     }
 
-    public Optional<CommentEntity> findCommentById(long id) {
-        return commentRepository.findById(id);
-    }
-
-    public Optional<CommentEntity> findById(long id) {
-        return commentRepository.findById(id);
+    public CommentEntity findCommentById(long id) {
+        return commentRepository.findById(id).orElseThrow(() -> new CustomException("Comment not found"));
     }
 
     private void deleteCommentById(long id) {
@@ -58,7 +54,7 @@ public class CommentService {
                 .localDate(DateUtils.getDate())
                 .countLikes(0)
                 .user(userService.getCurrentUserByPrincipal())
-                .post(postService.findById(postId).orElseThrow(() -> new CustomException("User not found")))
+                .post(postService.findById(postId))
                 .build();
         saveComment(comment);
         return ResponseEntity.ok("Comment was added");
@@ -70,8 +66,7 @@ public class CommentService {
      * @param commentId
      */
     public ResponseEntity<String> addLikeToComment(long commentId) {
-        var comment = findCommentById(commentId)
-                .orElseThrow(() -> new CustomException("Comment not found"));
+        var comment = findCommentById(commentId);
         comment.setCountLikes(comment.getCountLikes() + 1);
         saveComment(comment);
         return ResponseEntity.ok("Like was added");
@@ -93,7 +88,7 @@ public class CommentService {
         }
         var userAuthorities = UtilService.getUserAuthorities();
         if (currentUser.getLogin().equals(owner) || UtilService.hasAdminOrModeratorRole(userAuthorities)) {
-            var comment = findCommentById(commentId).orElseThrow(() -> new CustomException("Comment not found"));
+            var comment = findCommentById(commentId);
             comment.setCommentText(commentText);
             saveComment(comment);
             return ResponseEntity.ok( String.format("%s update successfully comment %d", currentUser.getLogin(), commentId));

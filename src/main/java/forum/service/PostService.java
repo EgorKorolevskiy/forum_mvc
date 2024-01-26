@@ -28,8 +28,8 @@ public class PostService {
         postRepository.save(postEntity);
     }
 
-    public Optional<PostEntity> findById(long id) {
-        return postRepository.findById(id);
+    public PostEntity findById(long id) {
+        return postRepository.findById(id).orElseThrow(() -> new CustomException("Post not found"));
     }
 
     public String findUserLoginByPostId(long postId) {
@@ -46,7 +46,7 @@ public class PostService {
 
 
     public List<PostEntity> findPostsByUserLogin(String login) {
-        var userEntity = userService.findByLogin(login).orElseThrow(() -> new CustomException("User not found"));
+        var userEntity = userService.findByLogin(login);
         return postRepository.findPostByUserLogin(userEntity.getId());
     }
 
@@ -90,7 +90,7 @@ public class PostService {
         var userAuthorities = UtilService.getUserAuthorities();
         if (currentUser.getLogin().equals(owner) || UtilService.hasAdminOrModeratorRole(userAuthorities)) {
             // Находим пост по id
-            var post = findById(postId).orElseThrow(() -> new CustomException("Post not found"));
+            var post = findById(postId);
             post.setPostName(postName);
             post.setPostContent(postContent);
             addPost(post);

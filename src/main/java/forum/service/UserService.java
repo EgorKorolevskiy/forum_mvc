@@ -25,12 +25,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Optional<UserEntity> findById(long id) {
-        return userRepository.findById(id);
+    public UserEntity findById(long id) {
+        return userRepository.findById(id).orElseThrow(() -> new CustomException("User not found"));
     }
 
-    public Optional<UserEntity> findByLogin(String login) {
-        return userRepository.findByLogin(login);
+    public UserEntity findByLogin(String login) {
+        return userRepository.findByLogin(login).orElseThrow(() -> new CustomException("User not found"));
     }
 
     public void updateUser(UserEntity userEntity) {
@@ -50,7 +50,7 @@ public class UserService {
      */
     public ResponseEntity<String> registrationUser(String login, String password) {
         var existLogin = findByLogin(login);
-        if (existLogin.isPresent()) {
+        if (existLogin != null) {
            throw new CustomException("Account already exists");
         }
         // шифруем пароль в хеш через BCrypt
@@ -75,8 +75,8 @@ public class UserService {
      * @param userId
      */
     public ResponseEntity<String> addRoleToUserById(long roleId, Long userId) {
-        var user = findById(userId).orElseThrow(() -> new CustomException("User not found"));
-        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
+        var user = findById(userId);
+        var role = roleService.findById(roleId);
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>());
         }
@@ -93,8 +93,8 @@ public class UserService {
      * @return
      */
     public ResponseEntity<String> addRoleToUserByLogin(String userLogin, Long roleId) {
-        var user = findByLogin(userLogin).orElseThrow(() -> new CustomException("User not found"));
-        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
+        var user = findByLogin(userLogin);
+        var role = roleService.findById(roleId);
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>());
         }
@@ -111,8 +111,8 @@ public class UserService {
      * @return
      */
     public ResponseEntity<String> deleteRoleToUserByLogin(String userLogin, Long roleId) {
-        var user = findByLogin(userLogin).orElseThrow(() -> new CustomException("User not found"));
-        var role = roleService.findById(roleId).orElseThrow(() -> new CustomException("Role not found"));
+        var user = findByLogin(userLogin);
+        var role = roleService.findById(roleId);
         if (user.getRoles() == null) {
             throw new CustomException("User don't have such role");
         }
@@ -130,6 +130,6 @@ public class UserService {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var user = (User) authentication.getPrincipal();
         final var username = user.getUsername();
-        return findByLogin(username).get();
+        return findByLogin(username);
     }
 }

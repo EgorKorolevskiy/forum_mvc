@@ -1,5 +1,6 @@
 package forum.service;
 
+import forum.exception.CustomException;
 import forum.model.RoleEntity;
 import forum.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class RoleService {
         return roleRepository.findIdByName(name);
     }
 
-    public Optional<RoleEntity> findById(long id) {
-        return roleRepository.findById(id);
+    public RoleEntity findById(long id) {
+        return roleRepository.findById(id).orElseThrow(() -> new CustomException("Role not found"));
     }
 
     public void updateRole(RoleEntity roleEntity) {

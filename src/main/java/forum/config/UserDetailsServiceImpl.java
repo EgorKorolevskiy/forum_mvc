@@ -34,8 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userService.findByLogin(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", username)));
+        var user = userService.findByLogin(username);
         return User.builder()
                 .username(user.getLogin())
                 .password(user.getPassword())
