@@ -52,7 +52,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CustomException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ErrorResponse> handleOkException(CustomException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), 200);
-        return new ResponseEntity<>(errorResponse, HttpStatus.OK);
+        var errorResponse = new ErrorResponse(ex.getMessage(), 200);
+        return ResponseEntity.status(HttpStatus.OK).body(errorResponse);
     }
 }
