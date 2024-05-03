@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="baa0cd2d-fd4d-4692-b488-89aaf29ecc7d" name="Changes" comment="Исправил замечания (все кроме Enum пока что)">
+    <list default="true" id="baa0cd2d-fd4d-4692-b488-89aaf29ecc7d" name="Changes" comment="Исправил обработку ошибок в сервисных классах">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/config/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/config/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/CommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/forum/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/controllers/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/forum/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/forum/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,16 +55,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "D:/JavaProjects/Coducation",
-    "settings.editor.selected.configurable": "IntelliLang.Configuration"
+    "last_opened_file_path": "D:/JavaProjects/hibernate-gradle-starter",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\JavaProjects\forum_mvc\src\main\resources" />
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources\static\views" />
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources\static" />
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources\db" />
-      <recent name="D:\JavaProjects\forum_mvc\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\JavaProjects\forum_mvc\src\main\resources\db\migration" />
@@ -137,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1705764936429</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Исправил обработку ошибок в сервисных классах">
+      <created>1706265633438</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706265633438</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,7 +173,8 @@
     <MESSAGE value="Первая структура проекта_1" />
     <MESSAGE value="Выполнил проект. Отправка на ревью" />
     <MESSAGE value="Исправил замечания (все кроме Enum пока что)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправил замечания (все кроме Enum пока что)" />
+    <MESSAGE value="Исправил обработку ошибок в сервисных классах" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправил обработку ошибок в сервисных классах" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/forum_mvc$Application.ic" NAME="Application Coverage Results" MODIFIED="1705695427678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

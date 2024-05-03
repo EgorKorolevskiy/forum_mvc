@@ -1,9 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/pr1_lesson2
+#    url: jdbc:postgresql://localhost:5432/pr1_lesson1
+    url: jdbc:postgresql://localhost:5430/postgres
     driverClassName: org.postgresql.Driver
     username: postgres
-    password: admin
+#    password: admin
+    password: pass
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

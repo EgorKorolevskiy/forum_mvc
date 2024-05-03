@@ -1,7 +1,6 @@
 package forum.controllers;
 
 import forum.dto.CommentDto;
-import forum.exception.CustomException;
 import forum.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
